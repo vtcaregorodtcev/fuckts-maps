@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/fuckts-maps/precache-manifest.40e5708390162cd513c716eb50f7baf5.js"
+  "/fuckts-maps/precache-manifest.62c014679eb040a70bfdcc39541f3f41.js"
 );
 
 workbox.clientsClaim();
