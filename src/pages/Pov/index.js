@@ -1,4 +1,5 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import Draggable from 'react-draggable';
 
 import {
@@ -15,7 +16,7 @@ import style from './style';
 import {history} from '_helpers';
 
 const {Content, Sider} = Layout;
-
+const confirm = Modal.confirm;
 const CreateFuckt = Input.Search;
 const SubMenu = Menu.SubMenu;
 
@@ -78,7 +79,7 @@ class PovPage extends React.Component {
       );
     });
 
-    if (pov === 'new') {
+    if (pov === 'new' && prevState.pov !== 'new') {
       return {
         pov,
         fuckts: defaultFuckts.map(f => {
@@ -96,10 +97,12 @@ class PovPage extends React.Component {
       );
 
       const {fuckts} = fucktsMap;
+      const currentMapIndex = allFucktMaps.findIndex(fm => fm.id === fucktsMap.id) + 3;
 
       return {
         pov,
         allFucktMaps,
+        currentMapIndex,
         fuckts: fuckts && fuckts.length
           ? fuckts.map(f => {
               f.defaultPosition = f.pos;
@@ -110,10 +113,7 @@ class PovPage extends React.Component {
       };
     }
 
-    return {
-      pov,
-      allFucktMaps
-    };
+    return null;
   }
 
   render() {
@@ -141,7 +141,7 @@ class PovPage extends React.Component {
           </Menu.Item>
           <Menu.Item key="2" onClick={() => this.triggerSaveMap()}>
             <Icon type="save"/>
-            <span>Сохранить Карту</span>
+            <span>Сохранить карту</span>
           </Menu.Item>
           {
             allFucktMaps.map((fm, idx) => (
@@ -151,6 +151,10 @@ class PovPage extends React.Component {
               </Menu.Item>
             ))
           }
+          <Menu.Item key="1000" onClick={() => this.triggerDeleteMap()}>
+            <Icon type="delete" />
+            <span>Удалить карту</span>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Content style={style.content.wrapper}>
@@ -169,6 +173,7 @@ class PovPage extends React.Component {
                 bounds='.draggable-area'
                 handle=".paper__drag-place"
                 defaultPosition={f.defaultPosition}
+                onStart={e => this.handleUpdateFucktCoordsFromStart(e)}
                 onStop={e => this.handleUpdateFucktCoords(e, f)}
               >
                 <div
@@ -247,8 +252,7 @@ class PovPage extends React.Component {
     const {fuckts} = this.state;
 
     const idx = fuckts.findIndex(f => f.id === fuckt.id);
-
-    fuckts.splice(idx, 1, newFuckt(value, {...fuckt}));
+    fuckts[idx].text = value;
 
     this.setState(() => ({fuckts}));
   }
@@ -266,19 +270,22 @@ class PovPage extends React.Component {
   handleClickDragFuckt(fuckt) {
     const {fuckts} = this.state;
 
-    const updated = fuckts.map(f => {
-      if (f.id === fuckt.id) {
-        f.zIndex = Z_INDEX_COUNTER++;
-      }
+    const idx = fuckts.findIndex(f => f.id === fuckt.id);
 
-      return f;
-    });
+    fuckts[idx].zIndex = Math.max.apply(null, fuckts.map(f => f.zIndex || 0)) + 1;
 
-    this.setState(() => ({fuckts: updated}));
+    this.setState(() => ({fuckts}));
+  }
+
+  handleUpdateFucktCoordsFromStart(e) {
+    this.movedFuckt = e.currentTarget;
   }
 
   handleUpdateFucktCoords(e, fuckt) {
-    const node = e.path[2];
+    const node = findDOMNode(this.movedFuckt);
+
+    if (!node) return;
+
     const nodeTransform = node.style.transform;
 
     const [x, y] = nodeTransform
@@ -293,6 +300,38 @@ class PovPage extends React.Component {
     fuckts[idx].pos = {x: +x, y: +y};
 
     this.setState(() => ({fuckts}));
+  }
+
+  triggerDeleteMap() {
+    const {match: {params: {pov} = {}} = {}} = this.props;
+    const toNew = () => this.goToNew();
+
+    if (pov !== 'new') {
+      const fucktsMap = JSON.parse(
+        localStorage.getItem(`${FUCKT_MAP_KEY}${pov}`) || '{}'
+      );
+
+      confirm({
+        title: `Хочешь удалить карту '${fucktsMap.name}'?`,
+        content: 'Её больше нельзя будет восстановить',
+        okText: 'Да, давай',
+        okType: 'danger',
+        cancelText: 'Ой, нет!',
+        onOk() {
+          const storedNames = JSON.parse(
+            localStorage.getItem(FUCKT_MAP_NAMES) || '[]'
+          );
+
+          const nameIdx = storedNames.indexOf(pov);
+          storedNames.splice(nameIdx, 1);
+
+          localStorage.setItem(FUCKT_MAP_NAMES, JSON.stringify(storedNames));
+          localStorage.setItem(`${FUCKT_MAP_KEY}${pov}`, '');
+
+          toNew();
+        }
+      });
+    }
   }
 
   triggerSaveMap() {
