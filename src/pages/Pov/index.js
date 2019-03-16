@@ -64,6 +64,10 @@ class PovPage extends React.Component {
   static getDerivedStateFromProps(props, prevState) {
     const {match: {params: {pov} = {}} = {}} = props;
 
+    if (prevState.saveMapModalIsVisible) {
+      return null;
+    }
+
     const storedNames = JSON.parse(
       localStorage.getItem(FUCKT_MAP_NAMES) || '[]'
     );
