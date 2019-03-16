@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/fuckts-maps/static/css/2.3cae298c.chunk.css"
   },
   {
-    "revision": "ba62a44645a329f168d88f149989237d",
+    "revision": "71d647bebd65a7b0ebc9582b2b38e6c9",
     "url": "/fuckts-maps/index.html"
   }
 ];
