@@ -170,7 +170,7 @@ class PovPage extends React.Component {
           onChange={({ target: { value } }) => this.handleUpdateFucktValue(value)}
           onSearch={fuckt => this.handleCreateFuckt(fuckt)}
         />
-        <div className="draggable-area" style={style.content.div}>
+        <div className="draggable-area" style={style.content.div} onKeyDown={e => this.handleAreaKeyDown(e)}>
           {
             fuckts.map((f, idx) => (
               <Draggable key={f.id}
@@ -243,6 +243,23 @@ class PovPage extends React.Component {
     </Layout>);
   }
 
+  handleAreaKeyDown(e) {
+    const charCode = String.fromCharCode(e.which).toLowerCase();
+
+    if ((e.ctrlKey || e.metaKey) && charCode === 'c') {
+      const {fuckts} = this.state;
+
+      const selected = fuckts.find(f => f.selected);
+      if (selected && !selected.deleted) {
+        fuckts.push(
+          newFuckt(selected.text, {...selected, defaultPosition: {x: 30, y: 30}})
+        );
+
+        this.setState(() => ({fuckts}));
+      }
+    }
+  }
+
   handleZoom(val) {
     let {zoomOut} = this.state;
     zoomOut += val;
@@ -303,13 +320,23 @@ class PovPage extends React.Component {
   }
 
   handleClickDragFuckt(fuckt) {
-    const {fuckts} = this.state;
+    const {fuckts} = this.selectFuckt(fuckt);
 
     const idx = fuckts.findIndex(f => f.id === fuckt.id);
 
     fuckts[idx].zIndex = Math.max.apply(null, fuckts.map(f => f.zIndex || 0)) + 1;
 
     this.setState(() => ({fuckts}));
+  }
+
+  selectFuckt(fuckt) {
+    const {fuckts} = this.state;
+
+    fuckts.map(f => {
+      f.selected = f.id === fuckt.id;
+    });
+
+    return {fuckts};
   }
 
   handleUpdateFucktCoordsFromStart(e) {

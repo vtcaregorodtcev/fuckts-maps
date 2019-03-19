@@ -5,7 +5,6 @@
   min-width: 250px;
   height: 150px;
   background: #fafafa;
-  border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
   overflow: hidden;
 }
