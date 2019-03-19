@@ -4,9 +4,9 @@ import {Icon} from 'antd';
 import './style.css';
 
 export default function Fuckt(props) {
-  const {fuckt, onFucktChange, onCloseClick} = props;
+  const {fuckt, onFucktChange, onCloseClick, zoomOut} = props;
 
-  return (<div className="paper">
+  return (<div className="paper" style={{zoom: (100 - zoomOut) + '%'}}>
     <div className="paper__drag-place"></div>
     <div className="paper-content">
       <textarea

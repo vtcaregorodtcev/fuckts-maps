@@ -1,5 +1,7 @@
 import Fuckt from './Fuckt';
+import Zoom from './Zoom';
 
 export {
-  Fuckt
+  Fuckt,
+  Zoom
 };

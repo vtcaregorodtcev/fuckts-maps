@@ -11,7 +11,7 @@ import {
   Alert
 } from 'antd';
 
-import {Fuckt} from 'components';
+import {Fuckt, Zoom} from 'components';
 import style from './style';
 import {history} from '_helpers';
 
@@ -54,7 +54,8 @@ class PovPage extends React.Component {
     fuckts: defaultFuckts,
     fucktValue: '',
     collapsed: true,
-    currentMapIndex: 1
+    currentMapIndex: 1,
+    zoomOut: 0
   };
 
   onCollapse = (collapsed) => {
@@ -82,6 +83,7 @@ class PovPage extends React.Component {
     if (pov === 'new' && prevState.pov !== 'new') {
       return {
         pov,
+        zoomOut: 0,
         fuckts: defaultFuckts.map(f => {
           f.id = Date.now() + ID_SEQUENCE++;
 
@@ -96,11 +98,12 @@ class PovPage extends React.Component {
         localStorage.getItem(`${FUCKT_MAP_KEY}${pov}`) || '{}'
       );
 
-      const {fuckts} = fucktsMap;
+      const {fuckts, zoomOut = 0} = fucktsMap;
       const currentMapIndex = allFucktMaps.findIndex(fm => fm.id === fucktsMap.id) + 3;
 
       return {
         pov,
+        zoomOut,
         allFucktMaps,
         currentMapIndex,
         fuckts: fuckts && fuckts.length
@@ -125,7 +128,8 @@ class PovPage extends React.Component {
       mapSaveName,
       successTextAlert,
       allFucktMaps,
-      currentMapIndex
+      currentMapIndex,
+      zoomOut
     } = this.state;
 
     return (<Layout className="layout pov-page" style={style.layout}>
@@ -186,6 +190,7 @@ class PovPage extends React.Component {
                   onClick={() => this.handleClickDragFuckt(f)}
                 >
                   <Fuckt
+                    zoomOut={zoomOut}
                     fuckt={f}
                     onFucktChange={(val, fuckt) => this.handleCahngeFuckt(val, fuckt)}
                     onCloseClick={fuckt => this.handleCloseFuckt(fuckt)}
@@ -220,7 +225,37 @@ class PovPage extends React.Component {
             />
           </div>
         }
+        <span style={
+          {
+            ...style.zoom,
+            ...(
+              !collapsed
+                ? style.notCollapsedZoom
+                : {}
+              )
+          }
+        }>
+          <Zoom
+            onPlus={() => this.handleZoom(-10)}
+            onMinus={() => this.handleZoom(10)}
+          />
+        </span>
     </Layout>);
+  }
+
+  handleZoom(val) {
+    let {zoomOut} = this.state;
+    zoomOut += val;
+
+    if (zoomOut > 50) {
+      zoomOut = 50;
+    }
+
+    if (zoomOut < 0) {
+      zoomOut = 0;
+    }
+
+    this.setState(() => ({zoomOut}));
   }
 
   goToNew() {
@@ -351,7 +386,7 @@ class PovPage extends React.Component {
   }
 
   handleSaveMapOk(pov) {
-    const {mapSaveName = pov, fuckts} = this.state;
+    const {mapSaveName = pov, fuckts, zoomOut} = this.state;
     const mapSaveNameFormatted = mapSaveName.replace(/\s/g, '_');
 
     const storedNames = JSON.parse(
@@ -370,7 +405,8 @@ class PovPage extends React.Component {
         id: Date.now() + ID_SEQUENCE++,
         name: mapSaveName,
         mapSaveNameFormatted,
-        fuckts
+        fuckts,
+        zoomOut
       })
     );
 
