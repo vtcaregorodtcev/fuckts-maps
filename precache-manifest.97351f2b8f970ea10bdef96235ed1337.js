@@ -8,23 +8,23 @@ self.__precacheManifest = [
     "url": "/fuckts-maps/static/js/runtime~main.d8a09a74.js"
   },
   {
-    "revision": "105cc1101418be3f5dbc",
-    "url": "/fuckts-maps/static/js/main.f4a46e8b.chunk.js"
+    "revision": "18c8d7762868733582b3",
+    "url": "/fuckts-maps/static/js/main.326451ad.chunk.js"
   },
   {
-    "revision": "df54b414a235fbf60cb4",
-    "url": "/fuckts-maps/static/js/2.7ec90216.chunk.js"
+    "revision": "05cd806daa9609f2fda7",
+    "url": "/fuckts-maps/static/js/2.c252d927.chunk.js"
   },
   {
-    "revision": "105cc1101418be3f5dbc",
-    "url": "/fuckts-maps/static/css/main.559b3364.chunk.css"
+    "revision": "18c8d7762868733582b3",
+    "url": "/fuckts-maps/static/css/main.35ebb433.chunk.css"
   },
   {
-    "revision": "df54b414a235fbf60cb4",
+    "revision": "05cd806daa9609f2fda7",
     "url": "/fuckts-maps/static/css/2.3cae298c.chunk.css"
   },
   {
-    "revision": "3bf2fd15619ea643043f7af08e1c2f35",
+    "revision": "8899a0c8092603c4b15533b9743593c3",
     "url": "/fuckts-maps/index.html"
   }
 ];
