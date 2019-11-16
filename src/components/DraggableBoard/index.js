@@ -16,8 +16,11 @@ export const DraggableBoard = ({
   onUpdate,
   zoomOut
 }) => {
-
   const [movedFuckt, setMovedFuckt] = useState(null);
+
+  const updateFuckts = (fuckts, fuckt) => {
+    onUpdate([].concat(fuckts, fuckt || []));
+  }
 
   const handleAreaKeyDown = e => {
     if (!isCtrlC(e)) return;
@@ -37,9 +40,7 @@ export const DraggableBoard = ({
       }
     });
 
-    const updatedFuckts = [].concat(fuckts, nf);
-
-    onUpdate(updatedFuckts);
+    updateFuckts(fuckts, nf);
   }
 
   const handleUpdateFucktCoords = fuckt => {
@@ -52,9 +53,7 @@ export const DraggableBoard = ({
     const idx = fuckts.findIndex(f => f.id === fuckt.id);
     fuckts[idx].pos = { x: +x, y: +y };
 
-    const updatedFuckts = [].concat(fuckts);
-
-    onUpdate(updatedFuckts);
+    updateFuckts(fuckts);
   }
 
   const handleClickDragFuckt = fuckt => {
@@ -69,18 +68,14 @@ export const DraggableBoard = ({
       return f;
     });
 
-    const updatedFuckts = [].concat(fuckts);
-
-    onUpdate(updatedFuckts);
+    updateFuckts(fuckts);
   }
 
   const handleCahngeFuckt = (value, fuckt) => {
     const idx = fuckts.findIndex(f => f.id === fuckt.id);
     fuckts[idx].text = value;
 
-    const updatedFuckts = [].concat(fuckts);
-
-    onUpdate(updatedFuckts);
+    updateFuckts(fuckts);
   }
 
   const handleCloseFuckt = fuckt => {
@@ -88,9 +83,7 @@ export const DraggableBoard = ({
 
     fuckts[idx].deleted = true;
 
-    const updatedFuckts = [].concat(fuckts);
-
-    onUpdate(updatedFuckts);
+    updateFuckts(fuckts);
   }
 
   return <div className="draggable-area"

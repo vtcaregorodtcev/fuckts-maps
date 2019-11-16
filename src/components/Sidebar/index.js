@@ -4,7 +4,7 @@ import { Layout, Menu, Icon, Modal } from 'antd';
 import { history } from 'helpers';
 import { ALERT_DURATION } from 'utils/consts';
 import {
-  getFucktsPathname,
+  getCurrentMap,
   getFucktsMap,
   eraseFucktsMap,
   saveMap,
@@ -34,7 +34,7 @@ export const Sidebar = (props) => {
   }
 
   const handleSaveMapOk = newMapName => {
-    const currentMap = getFucktsPathname().replace('/fuckts/', '');
+    const currentMap = getCurrentMap();
 
     const mapSaveName = newMapName || currentMap;
     const mapSaveNameFormatted = mapSaveName.replace(/\s/g, '_');
@@ -55,17 +55,17 @@ export const Sidebar = (props) => {
   }
 
   const triggerSaveMap = () => {
-    const currentMap = getFucktsPathname().replace('/fuckts/', '');
+    const currentMap = getCurrentMap();
 
     if (currentMap !== 'new') {
-      return handleSaveMapOk(this.currentMap);
+      return handleSaveMapOk(currentMap);
     }
 
     toggleSaveMap(true);
   }
 
   const triggerDeleteMap = () => {
-    const currentMap = getFucktsPathname().replace('/fuckts/', '');
+    const currentMap = getCurrentMap();
 
     if (currentMap === 'new') { return; }
 

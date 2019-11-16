@@ -20,14 +20,5 @@ export default {
       display: 'inline-block',
       position: 'absolute'
     }
-  },
-  zoom: {
-    transition: 'all 0.2s',
-    position: 'fixed',
-    bottom: 10,
-    left: 90
-  },
-  notCollapsedZoom: {
-    left: 210
   }
 };

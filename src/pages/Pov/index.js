@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 
 import {
@@ -14,11 +14,12 @@ import { history } from 'helpers';
 import {
   newFuckt,
   getAllMaps,
-  nextId,
+  regenDefaultFuckts,
   getFucktsMap,
   updateZoom,
   getMenuMapIndex,
-  getFucktsPathname
+  getFucktsPathname,
+  reassignPosToDefault
 } from 'utils';
 
 import { DEFAULT_FUCKTS } from 'utils/consts';
@@ -27,147 +28,86 @@ import style from './style';
 
 const { Content } = Layout;
 
-class PovPage extends React.Component {
-  fuckts = DEFAULT_FUCKTS;
-  collapsed = true;
-  currentMapIndex = 1;
-  zoomOut = 0;
+const PovPage = () => {
+  const [fuckts, setFuckts] = useState(DEFAULT_FUCKTS);
+  const [currentMapIndex, setCurrentMapIndex] = useState(1);
+  const [zoomOut, setZoomOut] = useState(0);
+  const [allMaps, setAllMaps] = useState(getAllMaps());
+  const [successTextAlert, setSuccessTextAlert] = useState('');
+  const [currentMap, setCurrentMap] = useState('new');
 
-  constructor(props) {
-    super(props);
-
-    this.handleUpdate(true);
-  }
-
-  componentDidMount() {
-    history.listen(this.handleUrlChanged);
-
-    this.handleUrlChanged({ pathname: getFucktsPathname() });
-  }
-
-  handleUrlChanged = ({ pathname }) => {
-    const map = pathname.replace('/fuckts/', '');
-
-    if (map === 'new' && this.currentMap !== 'new') {
-      return this.setNewMap();
-    }
-
-    if (this.currentMap !== map) {
-      const fucktsMap = getFucktsMap(map);
-      return this.setMap(fucktsMap, map);
-    }
-  }
-
-  render() {
-    return (<Layout className="layout currentMap-page" style={style.layout}>
-      <Sidebar
-        currentFuckts={this.fuckts}
-        currentZoom={this.zoomOut}
-        maps={this.allMaps}
-        currentMapIndex={this.currentMapIndex}
-        onNotify={this.handleSidebarNotify}
-        onDelete={this.handleUpdate}
-        onSave={this.handleUpdate}
-      />
-
-      <Content style={style.content.wrapper}>
-        <CreateFucktInput handleCreateFuckt={this.handleCreateFuckt} />
-
-        <DraggableBoard
-          style={style}
-          fuckts={this.fuckts}
-          zoomOut={this.zoomOut}
-          onUpdate={this.handleFucktsUpdate}
-        />
-      </Content>
-
-      <AlertComponent
-        msg={this.successTextAlert}
-        onClose={this.handleSidebarNotify}
-      />
-
-      <ZoomWrapper
-        style={style}
-        handleZoom={this.handleZoom}
-      />
-    </Layout>);
-  }
-
-  handleFucktsUpdate = fuckts => {
-    this.fuckts = fuckts;
-
-    this.forceUpdate();
-  }
-
-  handleSidebarNotify = (msg = '') => {
-    this.successTextAlert = msg;
-
-    this.forceUpdate();
-  }
-
-  handleCreateFuckt = fucktText => {
-    const nf = newFuckt(fucktText);
-
-    this.addNewFuckt(nf);
-  }
-
-  setNewMap = () => {
-    this.currentMap = 'new';
-    this.zoomOut = 0;
-    this.currentMapIndex = 1;
-
-    this.fuckts = DEFAULT_FUCKTS.map(f => {
-      f.id = nextId();
-
-      return f;
-    });
-
-    this.forceUpdate();
-  };
-
-  setMap = (map, name) => {
+  const setupMap = (map, name) => {
     const { fuckts = [], zoomOut = 0 } = map;
 
     const currentMapIndex = getMenuMapIndex(name);
 
-    this.currentMap = name;
-    this.zoomOut = zoomOut;
-    this.currentMapIndex = currentMapIndex;
-
-    this.fuckts = fuckts.map(f => {
-      f.defaultPosition = f.pos;
-
-      return f;
-    });
-
-    this.forceUpdate();
+    setCurrentMap(name);
+    setZoomOut(zoomOut);
+    setCurrentMapIndex(currentMapIndex);
+    setFuckts(fuckts.map(reassignPosToDefault));
   }
 
-  addNewFuckt(fuckt) {
-    this.fuckts = [].concat(this.fuckts, fuckt);
+  const handleUrlChanged = ({ pathname }) => {
+    const map = pathname.replace('/fuckts/', '');
 
-    this.forceUpdate();
+    if (map === 'new') {
+      return setFuckts(regenDefaultFuckts());
+    }
+
+    if (map !== currentMap) {
+      const fucktsMap = getFucktsMap(map);
+      return setupMap(fucktsMap, map);
+    }
   }
 
-  handleCollapse = collapsed => {
-    this.collapsed = collapsed;
+  const handleCreateFuckt = fucktText => {
+    const nf = newFuckt(fucktText);
 
-    this.forceUpdate();
+    setFuckts([].concat(fuckts, nf));
   }
 
-  handleZoom = val => {
-    this.zoomOut = updateZoom(this.zoomOut, val);
-
-    this.forceUpdate();
+  const handleZoom = val => {
+    setZoomOut(updateZoom(zoomOut, val));
   }
 
-  handleUpdate = skipForce => {
-    this.allMaps = getAllMaps();
+  useEffect(() => {
+    history.listen(handleUrlChanged);
 
-    if (skipForce) { return; }
+    handleUrlChanged({ pathname: getFucktsPathname() });
+  }, []);
 
-    this.forceUpdate();
-  }
+  return (<Layout className="layout currentMap-page" style={style.layout}>
+    <Sidebar
+      currentFuckts={fuckts}
+      currentZoom={zoomOut}
+      maps={allMaps}
+      currentMapIndex={currentMapIndex}
+      onNotify={setSuccessTextAlert}
+      onDelete={() => setAllMaps(getAllMaps())}
+      onSave={() => setAllMaps(getAllMaps())}
+    />
+
+    <Content style={style.content.wrapper}>
+      <CreateFucktInput handleCreateFuckt={handleCreateFuckt} />
+
+      <DraggableBoard
+        style={style}
+        fuckts={fuckts}
+        zoomOut={zoomOut}
+        onUpdate={setFuckts}
+      />
+    </Content>
+
+    <AlertComponent
+      msg={successTextAlert}
+      onClose={setSuccessTextAlert}
+    />
+
+    <ZoomWrapper
+      style={style}
+      handleZoom={handleZoom}
+    />
+  </Layout>);
 }
 
 export default PovPage;

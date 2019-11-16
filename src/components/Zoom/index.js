@@ -23,17 +23,8 @@ Zoom.defaultProps = {
   onMinus: () => { }
 };
 
-export const ZoomWrapper = ({ style, handleZoom }) => {
-  return <span style={
-    {
-      ...style.zoom,
-      ...(
-        false // TODO:
-          ? style.notCollapsedZoom
-          : {}
-      )
-    }
-  }>
+export const ZoomWrapper = ({ handleZoom }) => {
+  return <span style={style.wrapper}>
     <Zoom
       onPlus={() => handleZoom(-10)}
       onMinus={() => handleZoom(10)}

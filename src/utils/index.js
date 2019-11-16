@@ -1,4 +1,4 @@
-import { FUCKT_MAP_NAMES, FUCKT_MAP_KEY } from './consts';
+import { FUCKT_MAP_NAMES, FUCKT_MAP_KEY, DEFAULT_FUCKTS } from './consts';
 
 export function newFuckt(text, options = {}) {
   return {
@@ -58,6 +58,10 @@ export function getFucktsPathname() {
   return window.location.hash.replace('#', '');
 }
 
+export function getCurrentMap() {
+  return getFucktsPathname().replace('/fuckts/', '');
+}
+
 export function eraseFucktsMap(map) {
   const ls = localStorage.getItem(FUCKT_MAP_NAMES) || '[]';
 
@@ -110,4 +114,18 @@ export function getMenuMapIndex(mapName) {
   const map = getFucktsMap(mapName);
 
   return getAllMaps().findIndex(fm => fm.id === map.id) + 3;
+}
+
+export function regenDefaultFuckts() {
+  return DEFAULT_FUCKTS.map(f => {
+    f.id = nextId();
+
+    return f;
+  });
+}
+
+export function reassignPosToDefault(f) {
+  f.defaultPosition = f.pos;
+
+  return f;
 }
