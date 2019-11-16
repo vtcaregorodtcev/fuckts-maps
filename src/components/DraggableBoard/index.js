@@ -60,7 +60,7 @@ export const DraggableBoard = ({
   }
 
   const handleClickDragFuckt = fuckt => {
-    fuckts.map(f => {
+    const updated = fuckts.map(f => {
       if (f.id === fuckt.id) {
         f.selected = true;
         f.zIndex = getMaxZIndex(fuckts);
@@ -71,7 +71,7 @@ export const DraggableBoard = ({
       return f;
     });
 
-    updateFuckts(fuckts);
+    updateFuckts(updated);
   }
 
   const handleCahngeFuckt = (value, fuckt) => {
@@ -83,7 +83,6 @@ export const DraggableBoard = ({
 
   const handleCloseFuckt = fuckt => {
     const idx = fuckts.findIndex(f => f.id === fuckt.id);
-
     fuckts[idx].deleted = true;
 
     updateFuckts(fuckts);
