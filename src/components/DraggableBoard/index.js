@@ -31,13 +31,16 @@ export const DraggableBoard = ({
 
     if (!selected) return;
 
+    const pos = {
+      x: selected.defaultPosition.x + 50,
+      y: selected.defaultPosition.y + 50
+    };
+
     const nf = newFuckt(
       selected.text, {
       ...selected,
-      defaultPosition: {
-        x: selected.defaultPosition.x + 50,
-        y: selected.defaultPosition.y + 50
-      }
+      pos,
+      defaultPosition: pos
     });
 
     updateFuckts(fuckts, nf);
