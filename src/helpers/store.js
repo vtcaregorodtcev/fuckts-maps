@@ -5,7 +5,7 @@ import { routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 
 import rootReducer from 'reducers';
-import { history } from 'helpers';
+import { history } from './history';
 
 const loggerMiddleware = createLogger();
 const pushMiddleware = routerMiddleware(history);

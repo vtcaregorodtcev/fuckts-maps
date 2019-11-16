@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (<div className="app">
       <Router history={history}>
-        <Routes></Routes>
+        <Routes />
       </Router>
     </div>);
   }

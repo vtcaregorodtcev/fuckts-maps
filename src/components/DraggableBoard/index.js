@@ -12,9 +12,9 @@ import {
 
 export const DraggableBoard = ({
   style,
-  fuckts,
+  fuckts = [],
   onUpdate,
-  zoomOut
+  zoomOut = 0
 }) => {
   const [movedFuckt, setMovedFuckt] = useState(null);
 
