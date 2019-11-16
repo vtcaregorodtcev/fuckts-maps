@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Router} from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Router } from 'react-router-dom';
+
 import './App.css';
 
-import {history} from '_helpers';
+import { history } from 'helpers';
 import Routes from './routes';
 
 class App extends Component {
@@ -11,14 +12,14 @@ class App extends Component {
     super(props);
 
     history.listen((location, action) => {
-      console.log(location)
+      console.log(location);
     });
   }
 
   render() {
     return (<div className="app">
       <Router history={history}>
-        <Routes/>
+        <Routes></Routes>
       </Router>
     </div>);
   }

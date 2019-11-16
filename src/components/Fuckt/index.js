@@ -1,10 +1,10 @@
 import React from 'react';
-import {Icon} from 'antd';
+import { Icon } from 'antd';
 
 import './style.css';
 
-export default function Fuckt(props) {
-  const {fuckt, onFucktChange, onCloseClick, zoomOut} = props;
+export const Fuckt = (props) => {
+  const { fuckt, onFucktChange, onCloseClick, zoomOut } = props;
 
   return (<div className="paper" style={
     {
