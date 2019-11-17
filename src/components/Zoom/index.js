@@ -1,15 +1,15 @@
 import React from 'react';
 import Type from 'prop-types';
-import {Button} from 'antd';
+import { Button } from 'antd';
 
 import style from './style';
 
-function Zoom(props) {
-  const {onPlus, onMinus} = props;
+export const Zoom = (props) => {
+  const { onPlus, onMinus } = props;
 
   return (<div className="zoom" style={style.zoom}>
     <Button shape="circle" icon="plus" onClick={() => onPlus()} />
-    <Button shape="circle" icon="minus" onClick={() => onMinus()}/>
+    <Button shape="circle" icon="minus" onClick={() => onMinus()} />
   </div>);
 }
 
@@ -19,8 +19,15 @@ Zoom.propTypes = {
 };
 
 Zoom.defaultProps = {
-  onPlus: () => {},
-  onMinus: () => {}
+  onPlus: () => { },
+  onMinus: () => { }
 };
 
-export default Zoom;
+export const ZoomWrapper = ({ handleZoom }) => {
+  return <span style={style.wrapper}>
+    <Zoom
+      onPlus={() => handleZoom(-10)}
+      onMinus={() => handleZoom(10)}
+    />
+  </span>
+}

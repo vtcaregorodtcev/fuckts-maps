@@ -6,13 +6,15 @@
   "dependencies": {
     "antd": "^3.15.0",
     "gh-pages": "^2.0.1",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "history": "^4.10.1",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
     "react-draggable": "^3.2.1",
     "react-redux": "^6.0.1",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "4.3.1",
     "react-router-redux": "^4.0.8",
     "react-scripts": "2.1.8",
+    "react-test-renderer": "16.8.4",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
@@ -23,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,5 +36,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "cypress": "^3.6.1"
+  }
 }

@@ -1,5 +1,3 @@
 import PovPage from './Pov';
 
-export {
-  PovPage
-};
+export { PovPage };
