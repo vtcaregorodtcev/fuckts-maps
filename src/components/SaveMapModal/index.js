@@ -3,12 +3,26 @@ import { Modal, Input } from 'antd';
 
 export const SaveMapModal = ({ visible, handleSaveMapOk, toggleSaveMap }) => {
   const [newMapName, setNewMapName] = useState('');
+  const [err, setErr] = useState(false);
 
   return <Modal
     title="Назови свою факт-карту"
     visible={visible}
-    onOk={() => newMapName && handleSaveMapOk(newMapName)}
-    onCancel={() => toggleSaveMap()}
+    onOk={() => {
+      if (newMapName && /^[a-zA-Zа-яА-Я0-9]+$/i.test(newMapName)) {
+        handleSaveMapOk(newMapName);
+
+        setNewMapName('');
+        return setErr(false);
+      }
+
+      setErr(true);
+    }}
+    onCancel={() => {
+      setErr(false);
+
+      toggleSaveMap();
+    }}
     okText="Вот так"
     cancelText="Потом, отстань!"
   >
@@ -17,5 +31,6 @@ export const SaveMapModal = ({ visible, handleSaveMapOk, toggleSaveMap }) => {
       value={newMapName}
       onChange={({ target: { value } }) => setNewMapName(value)}
     />
+    {err && <i>Выбери норм имя</i>}
   </Modal>
 }

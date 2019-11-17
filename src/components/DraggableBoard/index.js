@@ -32,8 +32,8 @@ export const DraggableBoard = ({
     if (!selected) return;
 
     const pos = {
-      x: selected.defaultPosition.x + 50,
-      y: selected.defaultPosition.y + 50
+      x: (selected.defaultPosition || { x: 0 }).x + 50,
+      y: (selected.defaultPosition || { y: 0 }).y + 50
     };
 
     const nf = newFuckt(

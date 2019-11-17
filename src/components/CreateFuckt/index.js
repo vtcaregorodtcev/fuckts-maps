@@ -12,6 +12,6 @@ export const CreateFucktInput = (props) => {
     enterButton="Добавить" size="large"
     value={value}
     onChange={({ target: { value } }) => setValue(value)}
-    onSearch={props.handleCreateFuckt}
+    onSearch={() => props.handleCreateFuckt(value) || setValue('')}
   />
 }
