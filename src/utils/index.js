@@ -27,11 +27,7 @@ export function getAllMaps() {
 
   const storedNames = JSON.parse(ls);
 
-  return storedNames.map(name => {
-    const ls = localStorage.getItem(`${FUCKT_MAP_KEY}${name}`) || '{}';
-
-    return JSON.parse(ls);
-  });
+  return storedNames.map(name => getFucktsMap(name));
 }
 
 export function getFucktsMap(map) {
@@ -106,8 +102,12 @@ export function getCoordsFromNode(node) {
     .split(' ');
 }
 
-export function getMaxZIndex(fuckts) {
-  return Math.max.apply(null, fuckts.map(f => f.zIndex || 0)) + 1;
+export function getMaxZIndex(fuckts = []) {
+  return Math.max.apply(null,
+    fuckts.length
+      ? fuckts.map(f => f.zIndex || 0)
+      : [0]
+  ) + 1;
 }
 
 export function getMenuMapIndex(mapName) {
