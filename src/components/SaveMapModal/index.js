@@ -9,7 +9,7 @@ export const SaveMapModal = ({ visible, handleSaveMapOk, toggleSaveMap }) => {
     title="Назови свою факт-карту"
     visible={visible}
     onOk={() => {
-      if (newMapName && /^[a-zA-Zа-яА-Я0-9]+$/i.test(newMapName)) {
+      if (newMapName && /^[a-zA-Zа-яА-Я0-9\s]+$/i.test(newMapName)) {
         handleSaveMapOk(newMapName);
 
         setNewMapName('');
@@ -27,6 +27,7 @@ export const SaveMapModal = ({ visible, handleSaveMapOk, toggleSaveMap }) => {
     cancelText="Потом, отстань!"
   >
     <Input
+      data-cy-save-map-name-input
       placeholder="Название сюда"
       value={newMapName}
       onChange={({ target: { value } }) => setNewMapName(value)}

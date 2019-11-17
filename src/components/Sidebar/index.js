@@ -102,23 +102,23 @@ export const Sidebar = (props) => {
       selectedKeys={[`${currentMapIndex || props.currentMapIndex}`]}
       mode="inline"
     >
-      <Menu.Item key="1" onClick={() => goToNew(1)}>
+      <Menu.Item data-cy-sidebar-menu-item-new-map key="1" onClick={() => goToNew(1)}>
         <Icon type="file" />
         <span>Новая карта</span>
       </Menu.Item>
       <Menu.Item key="2" onClick={() => triggerSaveMap()}>
         <Icon type="save" />
-        <span>Сохранить карту</span>
+        <span data-cy-save-map>Сохранить карту</span>
       </Menu.Item>
       {
         props.maps.map((fm, idx) => (
-          <Menu.Item key={idx + 3} onClick={() => goToMap(fm.mapSaveNameFormatted, idx + 3)}>
+          <Menu.Item data-cy-sidebar-menu-item key={idx + 3} onClick={() => goToMap(fm.mapSaveNameFormatted, idx + 3)}>
             <Icon type="copy" />
             <span>{fm.name}</span>
           </Menu.Item>
         ))
       }
-      <Menu.Item key="1000" onClick={() => triggerDeleteMap()}>
+      <Menu.Item data-cy-sidebar-menu-item-remove-map key="1000" onClick={() => triggerDeleteMap()}>
         <Icon type="delete" />
         <span>Удалить карту</span>
       </Menu.Item>

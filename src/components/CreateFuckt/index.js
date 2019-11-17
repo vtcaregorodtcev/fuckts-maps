@@ -7,6 +7,7 @@ export const CreateFucktInput = (props) => {
   const [value, setValue] = useState('');
 
   return <CreateFuckt
+    data-cy-create-fuckt
     className="pov-page__create-input"
     placeholder="Введи свой факт"
     enterButton="Добавить" size="large"
