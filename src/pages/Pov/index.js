@@ -2,6 +2,8 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import { Layout } from 'antd';
 
 import { DEFAULT_FUCKTS } from '../../utils/consts';

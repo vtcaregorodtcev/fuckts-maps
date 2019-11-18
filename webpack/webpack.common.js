@@ -62,10 +62,12 @@ module.exports = {
   resolve: {
     modules: ['src', 'node_modules'],
     extensions: ['*', '.js', '.jsx', '.css', '.scss'],
-    /* alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat',
-    }, */
+    alias: {
+      react: 'preact/compat',
+      'react-dom/test-utils': 'preact/test-utils',
+      'react-dom': 'preact/compat',
+      // Must be below test-utils
+    },
   },
   plugins: [
     new webpack.ProgressPlugin(),

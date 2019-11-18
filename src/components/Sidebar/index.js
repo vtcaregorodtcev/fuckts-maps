@@ -4,6 +4,8 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import { Layout, Menu, Icon, Modal } from 'antd';
 
 import {

@@ -34,6 +34,13 @@ module.exports = function(api) {
     '@babel/plugin-syntax-import-meta',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-json-strings',
+    [
+      '@babel/plugin-transform-react-jsx',
+      {
+        pragma: 'h',
+        pragmaFrag: 'Fragment',
+      },
+    ],
   ];
 
   if (babelEnv === 'production') {

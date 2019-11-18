@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import Type from 'prop-types';
 import { Button } from 'antd';
 

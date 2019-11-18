@@ -2,6 +2,8 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import { Modal, Input } from 'antd';
 
 export const SaveMapModal = ({ visible, handleSaveMapOk, toggleSaveMap }) => {

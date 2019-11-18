@@ -1,4 +1,6 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { PovPage } from './pages';

@@ -6,6 +6,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import { findDOMNode } from 'react-dom';
 import Draggable from 'react-draggable';
 

@@ -1,4 +1,6 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
+import { h } from 'preact';
 import { Router } from 'react-router-dom';
 
 import './App.css';
