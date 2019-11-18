@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<span
+  className="ant-input-search pov-page__create-input ant-input-search-enter-button ant-input-search-large ant-input-group-wrapper ant-input-group-wrapper-lg"
+>
+  <span
+    className="ant-input-wrapper ant-input-group"
+  >
+    <input
+      className="ant-input ant-input-lg"
+      data-cy-create-fuckt={true}
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder="Введи свой факт"
+      style={null}
+      type="text"
+      value=""
+    />
+    <span
+      className="ant-input-group-addon"
+    >
+      <button
+        className="ant-btn ant-input-search-button ant-btn-primary ant-btn-lg"
+        onClick={[Function]}
+        type="button"
+      >
+        <span>
+          Добавить
+        </span>
+      </button>
+    </span>
+  </span>
+</span>
+`;

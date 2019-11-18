@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="zoom"
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": 75,
+      "justifyContent": "space-evenly",
+      "zIndex": 1,
+    }
+  }
+>
+  <button
+    className="ant-btn ant-btn-circle ant-btn-icon-only"
+    onClick={[Function]}
+    type="button"
+  >
+    <i
+      aria-label="icon: plus"
+      className="anticon anticon-plus"
+    >
+      <svg
+        aria-hidden="true"
+        className=""
+        data-icon="plus"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="64 64 896 896"
+        width="1em"
+      >
+        <path
+          d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+        />
+        <path
+          d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+        />
+      </svg>
+    </i>
+  </button>
+  <button
+    className="ant-btn ant-btn-circle ant-btn-icon-only"
+    onClick={[Function]}
+    type="button"
+  >
+    <i
+      aria-label="icon: minus"
+      className="anticon anticon-minus"
+    >
+      <svg
+        aria-hidden="true"
+        className=""
+        data-icon="minus"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="64 64 896 896"
+        width="1em"
+      >
+        <path
+          d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"
+        />
+      </svg>
+    </i>
+  </button>
+</div>
+`;
