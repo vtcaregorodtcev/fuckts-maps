@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { h } from 'preact';
 import { Layout } from 'antd';
+import '../../svelte/create-fuckt-input.svelte';
 
 import { DEFAULT_FUCKTS } from '../../utils/consts';
 
@@ -23,7 +24,7 @@ import { history } from '../../helpers';
 
 import {
   ZoomWrapper,
-  CreateFucktInput,
+  // CreateFucktInput,
   Sidebar,
   AlertComponent,
   DraggableBoard,
@@ -94,7 +95,8 @@ const PovPage = () => {
       />
 
       <Content style={style.content.wrapper}>
-        <CreateFucktInput handleCreateFuckt={handleCreateFuckt} />
+        {/* <CreateFucktInput handleCreateFuckt={handleCreateFuckt} /> */}
+        <svelte-create-fuckt handleCreateFuckt={handleCreateFuckt} />
 
         <DraggableBoard
           style={style}
