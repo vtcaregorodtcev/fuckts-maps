@@ -4,6 +4,7 @@ const convert = require('koa-connect');
 const history = require('connect-history-api-fallback');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const path = require('path');
 const commonPaths = require('./paths');
 
 module.exports = {
@@ -18,6 +19,16 @@ module.exports = {
         options: {
           formatter: eslint.CLIEngine.getFormatter('stylish'),
           emitWarning: process.env.NODE_ENV !== 'production',
+        },
+      },
+      {
+        test: /\.(svelte)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'svelte-loader',
+          options: {
+            customElement: true,
+          },
         },
       },
       {
@@ -61,13 +72,14 @@ module.exports = {
   },
   resolve: {
     modules: ['src', 'node_modules'],
-    extensions: ['*', '.js', '.jsx', '.css', '.scss'],
+    extensions: ['*', '.mjs', '.js', '.svelte', '.jsx', '.css', '.scss'],
     alias: {
       react: 'preact/compat',
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat',
-      // Must be below test-utils
+      svelte: path.resolve('node_modules', 'svelte'),
     },
+    mainFields: ['svelte', 'browser', 'module', 'main'],
   },
   plugins: [
     new webpack.ProgressPlugin(),
